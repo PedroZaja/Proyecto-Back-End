@@ -1,0 +1,44 @@
+ <div>
+        <div class="realTimeProductsForm">
+            <h2>Gestión de productos</h2>
+            <div>
+                <label for="productId">Id (solo para actualizar o borrar):</label>
+                <input id="productId" type="text">
+            </div>
+            <div>
+                <label for="titulo">Titulo:</label>
+                <input id="titulo" type="text">
+            </div>
+            <div>
+                <label for="descripcion">Descripción:</label>
+                <input id="descripcion" type="text">
+            </div>
+            <div>
+                <label for="code">Codigo:</label>
+                <input id="code" type="text">
+            </div>
+            <div>
+                <label for="precio">Precio:</label>
+                <input id="precio" type="text">
+            </div>
+            <div>
+                <label for="stock">Stock:</label>
+                <input id="stock" type="text">
+            </div>
+            <div>
+                <label for="img">Imagenes (Separar por coma los links a las imagenes si son más de una):</label>
+                <input id="img" type="text">
+            </div>
+            <div class="formButtons">
+                <button id="createProduct">Crear</button>
+                <button id="updateProduct">Actualizar</button>
+                <button id="deleteProduct">Borrar</button>     
+            </div>
+
+            <div>
+                <p id="message"></p>
+            </div>
+        </div>
+    </div>
+<script src="/socket.io/socket.io.js" ></script>
+<script src="/js/productsHandlerWebSockets.js"></script>

@@ -1,0 +1,13 @@
+.productRealTimeList{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    
+
+}
+.productRealTimeItem{
+    border: 2px solid black;
+    margin-right: 20px;
+    padding: 3%;
+}

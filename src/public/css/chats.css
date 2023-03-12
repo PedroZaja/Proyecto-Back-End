@@ -1,0 +1,46 @@
+*{
+    margin: none;
+    padding: none;
+    border: none;
+}
+
+body{
+    background-color: rgb(66, 61, 90);
+    color: white;
+}
+
+.chatContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 99vw;
+}
+
+.chatMessageLogs{
+    display: flex;
+    align-items: flex-end;
+    height: 70vh;
+    border: 2px solid white;
+    width: 40%;
+    text-align: left;
+    overflow-y: auto; 
+    
+}
+
+#messageLogs {
+    max-height: 70vh;
+    padding: 15px;
+}
+
+.chatChatBox{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    overflow: auto
+}
+
+.chatChatBox #chatBox{
+    width: 50%;
+    height: 10vh;
+}
