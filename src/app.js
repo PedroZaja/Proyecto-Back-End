@@ -4,6 +4,7 @@ import handlebars from "express-handlebars"
 import mongoose from 'mongoose';
 import routerApi from "./routes/index.js";
 import socketFunctions from "./services/app.service.js"
+import cookieParser from "cookie-parser";
 
 const PORT = 8080;
 const myApp = express();
@@ -19,6 +20,8 @@ myApp.use(express.urlencoded({extended:true}));
 myApp.engine("handlebars", handlebars.engine());
 myApp.set("views", __dirname + "/views");
 myApp.set("view engine", "handlebars") //Nos permite usar el response.render()
+
+myApp.use(cookieParser());
 
 //Conexion a servidor
 const httpServer = myApp.listen(PORT, () => {

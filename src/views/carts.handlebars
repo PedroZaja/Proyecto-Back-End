@@ -1,0 +1,16 @@
+<h1>Su carrito. ID: {{this._id}}</h1>
+<div id="productRealTimeList" class="productRealTimeList">
+
+    {{#each carts.products}}
+        <div class="productRealTimeItem"> 
+            <p>Titulo: {{this.product.title}} </p>
+            <p>Descripción: {{this.product.description}} </p>
+            <p>Codigo: {{this.product.code}} </p>
+            <p>Precio: {{this.product.price}}</p>
+            <p>Categoria: {{this.product.category}} </p>
+            <p>Imagenes: {{this.product.thumbnails}} </p>
+            <p>Cantidad: {{this.quantity}} </p>
+        </div>
+
+    {{/each}}
+</div> 

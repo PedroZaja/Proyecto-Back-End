@@ -1,11 +1,8 @@
 import {Router} from "express";
 import { cartsModel } from "./../dao/db/models/carts.model.js"
-import { productModel } from "./../dao/db/models/products.model.js"
 
 const dirPath = "./carrito.json";
 const router = Router();
-
-
 
 
 router.post("/", async (req,res) => {
@@ -17,38 +14,11 @@ router.post("/", async (req,res) => {
     }
 })
 
-router.post("/:cid/product/:pid", async (req,res) => {
-    const { cid , pid } = req.params;
+router.put("/:cid", async (req,res) => {
+    const { cid } = req.params;
+    let body = req.body
     try {
-        let productExists = await productModel.findById(pid)
-        
-        if (!productExists) {
-            res.status(404).json( {message: "El producto no existe"})
-        }
-        let auxCart = await cartsModel.findById(cid);
-        if (auxCart.products.length == 0) {
-            let product = [{id: pid, quantity:1}]
-            res.status(200).json( await cartsModel.updateOne({_id:cid}, {products: product}))
-        }else{
-            let products = [];
-            let updateProduct = auxCart.products.filter(oneProd => oneProd._id === pid) 
-            let newQuantity = 1;
-            if (updateProduct.length > 0) {
-                newQuantity = parseInt(updateProduct[0].quantity) + 1
-                products = auxCart.products.map(
-                    (oneProd) => {
-                        if (oneProd._id === pid){
-                            oneProd = {_id: pid,quantity: parseInt(newQuantity)}
-                        }  
-                        return oneProd
-                    }
-                    )
-            }else{
-                products = auxCart.products;
-                products.push({_id: pid, quantity: 1})
-            }
-            res.status(200).json( await cartsModel.updateOne({_id:cid}, {products: products}))
-        }
+        res.status(200).json( await cartsModel.updateOne({_id:cid}, {products: body}))
     } catch (error) {
         res.status(500).json({message: error.message});
     }
@@ -57,13 +27,65 @@ router.post("/:cid/product/:pid", async (req,res) => {
 router.get('/:cid', async (req,res) => {
     const { cid } = req.params;
     try {
-        res.status(200).json( await cartsModel.findById(cid))
+        res.status(200).json( await cartsModel.findById(cid).populate("products.product"))
     } catch (error) {
         res.status(500).json({message: error.message});
     }
 });
 
+router.delete("/:cid", async (req,res) => {
+    const { cid } = req.params;
+    try {
+        res.status(200).json(await cartsModel.updateOne({_id:cid}, {products: []}))
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+})
 
+router.post("/:cid/product/:pid", async (req,res) => {
+    const { cid , pid } = req.params;
+    try {
+        
+        
+        let productAlreadyInCart = await cartsModel.find({products: {$elemMatch: {product: pid}}})
+        
+        let auxCart = await cartsModel.findById(cid)
+        if (productAlreadyInCart == 0) {
+            auxCart.products.push({product:pid, quantity: 1})
+            res.status(200).json( await cartsModel.updateOne({_id:cid}, auxCart))
+        }else{
+            let updateProduct = auxCart.products.filter(oneProd => oneProd.product == pid)
+
+            res.status(200).json( await cartsModel.findOneAndUpdate({_id:cid, "products.product": pid}, {$set: {"products.$.quantity": updateProduct[0].quantity + 1}}, { new: true }))
+        }
+
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+})
+
+router.delete("/:cid/products/:pid", async (req,res) => {
+    try {
+        const { cid , pid } = req.params;
+        let result = await cartsModel.findByIdAndUpdate({_id:cid},
+            { $pull: { products: {product: pid}} } ,
+            { new: true }
+            );
+        res.status(201).json(result)
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+})
+
+router.put("/:cid/products/:pid", async (req,res) => {
+    const { cid , pid } = req.params;
+    let body = req.body
+    try {
+        res.status(200).json( await cartsModel.findOneAndUpdate({_id:cid, "products.product": pid}, {$set: {"products.$.quantity": parseInt(body.quantity)}}, { new: true }))
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+})
 
 
 export default router;

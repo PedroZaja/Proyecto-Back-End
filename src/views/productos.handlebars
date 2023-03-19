@@ -1,0 +1,31 @@
+<h1>Productos:</h1>
+<div id="productRealTimeList" class="productRealTimeList">
+
+    {{#each resultQuery.docs}}
+        <div class="productRealTimeItem"> 
+            <p>Titulo: {{title}} </p>
+            <p>Descripción: {{description}} </p>
+            <p>Codigo: {{code}} </p>
+            <p>Precio: {{price}}</p>
+            <p>Stock: {{stock}} </p>
+            <p>Categoria: {{category}} </p>
+            <p>Imagenes: {{thumbnails}} </p>
+            <button class="buttonAddToCart">Añadir al carrito</button>
+
+        </div>
+
+    {{/each}}
+
+
+</div>
+<div class="pagination">
+        {{!-- {{#if hasPrevPage}} --}}
+            <a href={{prevLink}}><< Anterior</a>
+        {{!-- {{/if}} --}}
+        &nbsp;
+        {{page}}
+        &nbsp;
+        {{!-- {{#if hasPrevPage}} --}}
+            <a href={{nextLink}}> Siguiente >></a>
+        {{!-- {{/if}} --}}
+</div>
