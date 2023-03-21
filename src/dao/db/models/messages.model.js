@@ -1,4 +1,4 @@
-import moongose from 'moongose';
+import mongoose from 'mongoose';
 
 const messagesCollection = "messages"
 
@@ -9,4 +9,4 @@ const messagesSchema = new mongoose.Schema({
 
 });
 
-export const messagesModel = moongose.model(messagesCollection, messagesSchema)
+export const messagesModel = mongoose.model(messagesCollection, messagesSchema)

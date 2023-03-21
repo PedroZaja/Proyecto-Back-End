@@ -25,7 +25,7 @@ myApp.use(cookieParser());
 
 //Conexion a servidor
 const httpServer = myApp.listen(PORT, () => {
-    console.log("Mi port:" + PORT)
+    console.log("Conectado al local host desde el puerto: " + PORT)
 })
 
 //MongoDB
