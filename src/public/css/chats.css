@@ -4,11 +4,6 @@
     border: none;
 }
 
-body{
-    background-color: rgb(66, 61, 90);
-    color: white;
-}
-
 .chatContainer{
     display: flex;
     align-items: center;
