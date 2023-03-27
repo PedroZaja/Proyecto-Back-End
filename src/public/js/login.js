@@ -13,10 +13,12 @@ form.addEventListener('submit',e=>{
         }
     }).then(result=>{
         if(result.status===200){
-            window.location.replace('/users');
-        } else if (result.status === 401){
-            console.log(result);
-            alert("Usuario invalido!")
+            window.location.replace('/api/views/products');
         }
+        if(result.status===401){
+            window.alert("Credenciales invalidas!");
+        }
+    }).catch( (error) => {
+        window.alert("Error: " + error);
     })
 });

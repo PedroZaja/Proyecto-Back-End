@@ -1,7 +1,10 @@
 import { loadMessages, saveMessage } from "./chats.service.js";
 
+import MongoStore from 'connect-mongo';
 import ProductManager from "./../dao/filesystem/models/ProductManager.js";
 import { Server } from "socket.io";
+
+const MONGO_URL = "mongodb+srv://PedroZaja:pedrozaja@pedrozaja.nsf6vel.mongodb.net/zaja-tecno?retryWrites=true&w=majority";
 
 const pm = new ProductManager("./productos.json")
 let socketFunctions = (httpServer) => {
@@ -50,4 +53,16 @@ let socketFunctions = (httpServer) => {
     return socketServer
 }
 
-export default socketFunctions
+
+let sessionJSON = {
+    store: MongoStore.create({
+        mongoUrl: MONGO_URL,
+        mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+        ttl: 30
+    }),
+    secret: "coderS3cr3t",
+    resave : false,
+    saveUninitialized: true
+}
+
+export {socketFunctions , sessionJSON , MONGO_URL} 

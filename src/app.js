@@ -1,23 +1,20 @@
+import {MONGO_URL, sessionJSON, socketFunctions}  from "./services/app.service.js"
+import express, { application } from "express";
 import __dirname from "./utils.js";
-import express from "express";
 import handlebars from "express-handlebars"
 import mongoose from 'mongoose';
-import routerApi from "./routes/index.js";
-import socketFunctions from "./services/app.service.js"
-import cookieParser from "cookie-parser";
 import MongoStore from "connect-mongo";
-import usersViewRouter from "./routes/users.router.js";
-import session from "express-session";
+import routerApi from "./routes/index.js";
+import session from 'express-session';
+import viewRouter from "./routes/views.router.js";
 import sessionsRouter from "./routes/sessions.router.js";
+import usersViewRouter from "./routes/users.view.router.js";
+import cookieParser from "cookie-parser";
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
-import viewRouter from "./routes/views.router.js";
-
 
 const PORT = 8080;
 const myApp = express();
-const MONGO_URL = "mongodb+srv://PedroZaja:pedrozaja@pedrozaja.nsf6vel.mongodb.net/zaja-tecno?retryWrites=true&w=majority"
-
 //Añado esto para poder usar los elementos publicos
 myApp.use(express.static(__dirname + "/public"))
 
