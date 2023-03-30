@@ -16,9 +16,9 @@ form.addEventListener('submit',e=>{
             window.location.replace('/api/views/products');
         }
         if(result.status===401){
-            window.alert("Credenciales invalidas!");
+            alert("Credenciales invalidas!");
         }
     }).catch( (error) => {
-        window.alert("Error: " + error);
+        alert("Error: " + error);
     })
 });

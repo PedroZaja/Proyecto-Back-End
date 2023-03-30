@@ -21,10 +21,10 @@ form.addEventListener('submit',e=>{
         }
     }).then(result => {
         if(result.status===400){
-            window.alert("El correo ya existe!");
+            alert("El correo ya existe!");
         }
         if(result.status===201){
-            window.alert("Creado con exito! Redireccionando al login...");
+            alert("Creado con exito! Redireccionando al login...");
             window.location.replace('/users/login');
         }
     });
