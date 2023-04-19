@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import userModel from '../services/models/user.model.js';
-import {isValidPassword} from '../utils.js';
 import { generateJWToken } from '../utils.js';
+import {isValidPassword} from '../utils.js';
+import userModel from './../dao/db/models/user.model.js'
 
 const router = Router();
 
@@ -9,8 +9,6 @@ router.post("/login", async (req, res)=>{
     const {email, password} = req.body;
     try {
         const user = await userModel.findOne({email: email});
-        console.log("Usuario encontrado para login:");
-        console.log(user);
         if (!user) {
             console.warn("User doesn't exists with username: " + email);
             return res.status(204).send({error: "Not found", message: "Usuario no encontrado con username: " + email});
@@ -26,8 +24,11 @@ router.post("/login", async (req, res)=>{
             role: user.role
         };
         const access_token = generateJWToken(tokenUser);
-        console.log(access_token);
-        res.send({message: "Login successful!", access_token: access_token});
+        //Con Cookie
+        res.cookie('jwtCookieToken', access_token, {
+            maxAge: 60000,
+            httpOnly: true
+        }).send({message: "Login successful!"});
     } catch (error) {
         console.error(error);
         return res.status(500).send({status:"error",error:"Error interno de la applicacion."});
